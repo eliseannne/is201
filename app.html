@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    body { 
+        background: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200') no-repeat center center fixed; 
+        background-size: cover;
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        min-height: 100vh; 
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .quiz-card { 
+        background: rgba(255, 255, 255, 0.9); 
+        backdrop-filter: blur(10px); /* Modern blur effect */
+        padding: 40px; 
+        border-radius: 25px; 
+        box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+        text-align: center; 
+        max-width: 500px; 
+        width: 90%; 
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+    .btn-choice { 
+        display: block; 
+        width: 100%; 
+        margin: 12px 0; 
+        padding: 15px; 
+        border: none; 
+        background: #0056b3; 
+        color: white;
+        font-weight: bold;
+        cursor: pointer; 
+        border-radius: 12px; 
+        transition: transform 0.2s, background 0.3s;
+    }
+    .btn-choice:hover { 
+        background-color: #003d82; 
+        transform: translateY(-2px); /* Lifts button on hover */
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Destination Quiz</title>
+    <link rel="stylesheet" href="css/mystyles.css">
+<style>
+    body { 
+        background-color: #002147; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        min-height: 100vh; 
+        margin: 0;
+        font-family: 'Georgia', serif; /* New softer font */
+    }
+    .quiz-card { 
+        background: #FFFDF5; 
+        padding: 40px; 
+        border: 3px solid #C5A059; 
+        text-align: center; 
+        max-width: 500px; 
+        width: 90%; 
+    }
+    .btn-choice { 
+        display: block; 
+        width: 100%; 
+        margin: 12px 0; 
+        padding: 15px; 
+        border: 1px solid #C5A059; 
+        background: #002147; 
+        color: #FFFDF5;
+        font-family: 'Georgia', serif;
+        cursor: pointer; 
+        transition: 0.3s;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-card">
+    <nav style="text-align: left; margin-bottom: 20px;">
+        <a href="scratch.html" style="text-decoration: none; color: #0056b3; font-weight: bold;">← Back to Scratch Page</a>
+    </nav>
+
+    <h2 style="color: #0056b3;">Where Should You Fly Next? ✈️</h2>
+    
+    <div id="quiz-box">
+        <h4 id="question-text">Loading question...</h4>
+        <div id="answer-buttons">
+            </div>
+    </div>
+
+    <div id="result-area" style="display: none;">
+        <h3 id="destination-name" style="color: #e67e22;"></h3>
+        <p id="destination-desc" style="margin-bottom: 20px;"></p>
+        <button onclick="resetQuiz()" style="padding: 10px 20px; background-color: #0056b3; color: white; border: none; border-radius: 5px; cursor: pointer;">Take Quiz Again</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: "Which vibe describes your ideal Saturday?",
+            answers: [
+                { text: "Espresso and a museum", value: "Milan" },
+                { text: "Hiking a mountain trail", value: "Swiss Alps" },
+                { text: "Tacos on a sunny beach", value: "Bali" },
+                { text: "Reading in a rainy bookstore", value: "London" }
+            ]
+        },
+        {
+            question: "This or That: Big City Lights or Quiet Countryside?",
+            answers: [
+                { text: "Big City Lights", value: "City" },
+                { text: "Quiet Countryside", value: "Nature" }
+            ]
+        },
+        {
+            question: "What is your favorite travel 'must-have'?",
+            answers: [
+                { text: "Professional Camera", value: "Milan" },
+                { text: "Comfortable Boots", value: "Swiss Alps" },
+                { text: "A good swimsuit", value: "Bali" },
+                { text: "An umbrella and a map", value: "London" }
+            ]
+        },
+        {
+            question: "Choose a snack:",
+            answers: [
+                { text: "Gelato", value: "Milan" },
+                { text: "Chocolate", value: "Swiss Alps" },
+                { text: "Fresh Pineapple", value: "Bali" },
+                { text: "Tea and Scones", value: "London" }
+            ]
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let scores = { "Milan": 0, "Swiss Alps": 0, "Bali": 0, "London": 0 };
+
+    function showQuestion() {
+        const q = questions[currentQuestionIndex];
+        document.getElementById('question-text').innerText = q.question;
+        const btnContainer = document.getElementById('answer-buttons');
+        btnContainer.innerHTML = '';
+
+        q.answers.forEach(choice => {
+            const btn = document.createElement('button');
+            btn.innerText = choice.text;
+            btn.className = "btn-choice";
+            btn.onclick = () => selectAnswer(choice.value);
+            btnContainer.appendChild(btn);
+        });
+    }
+
+    function selectAnswer(val) {
+        if (scores[val] !== undefined) scores[val]++;
+        if (val === "City") { scores["Milan"]++; scores["London"]++; }
+        if (val === "Nature") { scores["Swiss Alps"]++; scores["Bali"]++; }
+
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            showQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        document.getElementById('quiz-box').style.display = 'none';
+        const resultArea = document.getElementById('result-area');
+        resultArea.style.display = 'block';
+        const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+        
+        const descriptions = {
+            "Milan": "You belong in Milan, Italy! Your love for high-end marketing, design, and culture makes this the perfect fit.",
+            "Swiss Alps": "Your destination is the Swiss Alps! You value peace, clean air, and the thrill of a good hike.",
+            "Bali": "Pack your bags for Bali! You're ready for the sun, tropical vibes, and total relaxation.",
+            "London": "London is calling! You appreciate history, bookstores, and the energy of a global hub."
+        };
+
+        document.getElementById('destination-name').innerText = "Result: " + winner;
+        document.getElementById('destination-desc').innerText = descriptions[winner];
+    }
+
+    function resetQuiz() {
+        currentQuestionIndex = 0;
+        scores = { "Milan": 0, "Swiss Alps": 0, "Bali": 0, "London": 0 };
+        document.getElementById('result-area').style.display = 'none';
+        document.getElementById('quiz-box').style.display = 'block';
+        showQuestion();
+    }
+
+    // Start the quiz
+    showQuestion();
+</script>
+
+</body>
+</html>

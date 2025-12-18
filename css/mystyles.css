@@ -1,0 +1,84 @@
+/* GLOBAL ELEGANCE THEME */
+body, html {
+    /* Georgia is softer and more modern than Times New Roman */
+    font-family: 'Georgia', 'Baskerville', serif !important;
+    color: #002147; 
+}
+
+/* Page-Specific Backgrounds */
+.home-body {
+    background-color: #FFFDF5 !important; /* Soft Cream */
+}
+
+.scratch-body {
+    background-color: #EBF4FA !important; /* Pale Blue */
+}
+
+/* Typography */
+h1, h2, h3, h4, .post-title, .navbar-brand, .nav-link {
+    font-family: 'Georgia', serif !important;
+    color: #002147 !important;
+    font-weight: bold;
+    letter-spacing: 0.5px; /* Adds a bit of sophisticated breathing room */
+}
+
+/* Gold Accents */
+hr {
+    border-top: 2px solid #C5A059 !important; /* Gold divider */
+    opacity: 1;
+    width: 50%;
+    margin: 20px auto;
+}
+
+.section-heading {
+    color: #C5A059 !important; /* Gold for main headers */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Resume Specifics */
+#resume {
+    background-color: #FFFDF5;
+}
+
+.resume-main-list li {
+    margin-bottom: 40px;
+}
+
+.resume-main-list h3 {
+    border-bottom: 1px solid #C5A059;
+    padding-bottom: 5px;
+}
+
+/* Buttons */
+.btn-primary, .btn-choice {
+    background-color: #002147 !important;
+    border: 1px solid #C5A059 !important;
+    color: #FFFDF5 !important;
+    font-family: 'Georgia', serif !important; /* Matches the new soft look */
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-primary:hover, .btn-choice:hover {
+    background-color: #C5A059 !important; /* Switch to Gold on hover */
+    color: #002147 !important;
+}
+
+/* Scratch Page Specifics */
+.main-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 50px;
+    border: 2px solid #C5A059;
+    box-shadow: 15px 15px 0px #002147;
+    text-align: left;
+}
+
+.content-block {
+    background-color: #fcfaf0;
+    border-left: 5px solid #C5A059;
+    padding: 20px;
+    margin: 20px 0;
+}
